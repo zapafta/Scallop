@@ -14,6 +14,8 @@ namespace ScallopShellProject
     {
         public static void Main(string[] args)
         {
+            //TESTE
+
             CreateWebHostBuilder(args).Build().Run();
         }
 
