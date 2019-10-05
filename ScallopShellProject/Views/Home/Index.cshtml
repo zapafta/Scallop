@@ -3,25 +3,30 @@
 }
 
 @model ScallopShellProject.Models.IndexViewModel
-<div class="products-catagories-area clearfix">
-    <div class="amado-pro-catagory clearfix">
+<div class="cart-table-area section-padding-100">
+    <div class="container-fluid">
+
+        <div class="products-catagories-area clearfix">
+            <div class="amado-pro-catagory clearfix">
 
 
-        @foreach (var item in Model.Articles)
-        {
-            <div class="single-products-catagory clearfix">
-                <a href="shop.html">
-                    <img src="img/produtos/@(item.Descricao).jpg" alt="">
-                    <!-- Hover Content -->
-                    <div class="hover-content">
-                        <div class="line"></div>
-                        <p>@(item.PrecoUnit) € </p>
-                        <h4>@item.Descricao</h4>
+                @foreach (var item in Model.Articles)
+                {
+                    <div class="single-products-catagory clearfix">
+                        <a href="shop.html">
+                            <img src="img/produtos/@(item.Descricao).jpg" alt="">
+                            <!-- Hover Content -->
+                            <div class="hover-content">
+                                <div class="line"></div>
+                                <p>@(item.PrecoUnit) € </p>
+                                <h4>@item.Descricao</h4>
+                            </div>
+                        </a>
                     </div>
-                </a>
+                }
+
             </div>
-        }
-      
+        </div>
+
     </div>
 </div>
-

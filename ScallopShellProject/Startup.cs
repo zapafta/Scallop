@@ -44,6 +44,8 @@ namespace ScallopShellProject
 
 
             services.AddTransient<ArticleRepository>();
+            services.AddTransient<CategoryRepository>();
+            services.AddTransient<ImageRepository>();
 
 
             services.AddMvc()

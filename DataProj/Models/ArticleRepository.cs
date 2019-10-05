@@ -18,7 +18,7 @@ namespace DataProj.Models
         public List<Article> GetArticles()
         {
 
-            List<Article> l = context.Article.Where(t=>t.Active==true).ToList();
+            List<Article> l = context.Article.ToList();
             return l;
         }
 

@@ -10,12 +10,23 @@
     <title>Amado - Furniture Ecommerce Template | Home</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
 
-    <!-- Core Style CSS -->
+    <script src="~/jquery-3.4.1.min.js"></script>
+
+   
+
+
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.css" />
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.js"></script>
+
+
+
     <link rel="stylesheet" href="css/core-style.css">
     <link rel="stylesheet" href="style.css">
-
+    <link rel="icon" href="img/core-img/favicon.ico">
 </head>
 <body>
 
@@ -69,9 +80,9 @@
             </nav>
             <!-- Button Group -->
             @*<div class="amado-btn-group mt-30 mb-100">
-                <a href="#" class="btn amado-btn mb-15">%Discount%</a>
-                <a href="#" class="btn amado-btn active">New this week</a>
-            </div>*@
+                    <a href="#" class="btn amado-btn mb-15">%Discount%</a>
+                    <a href="#" class="btn amado-btn active">New this week</a>
+                </div>*@
             <!-- Cart Menu -->
             <div class="cart-fav-search mb-100">
                 <a href="cart.html" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
@@ -86,18 +97,14 @@
                 <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
             </div>
         </header>
-        <div class="cart-table-area section-padding-100">
-            <div class="container-fluid">
-              
-                    @RenderBody()
-                
-            </div>
-        </div>
+
+        @RenderBody()
+
     </div>
+
     <!-- ##### Main Content Wrapper End ##### -->
     <!-- ##### Newsletter Area Start ##### -->
     <section class="newsletter-area section-padding-100-0">
-  
     </section>
     <footer class="footer_area clearfix">
         <div class="container">
@@ -112,8 +119,8 @@
                         <!-- Copywrite Text -->
                         <p class="copywrite">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        
-                            <script>document.write(new Date().getFullYear());</script> 
+
+                            <script>document.write(new Date().getFullYear());</script>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>
                     </div>
@@ -128,13 +135,9 @@
                                 <div class="collapse navbar-collapse" id="footerNavContent">
                                     <ul class="navbar-nav ml-auto">
                                         <li class="nav-item active">
-                                            <a href="@Url.Action("Index", "Home")">PaginaInicial</a>
+                                        <li class="active">  <a href="@Url.Action("Index", "Home")">PaginaInicial</a>
+                                        <li>   <a href="@Url.Action("Index", "Shop")">Loja</a></li>
 
-
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("Index", "Shop")">Loja</a>
-                                        </li>
                                         <li class="nav-item">
                                             <a href="@Url.Action("Index", "Home")">Produtos</a>
                                         </li>
@@ -154,8 +157,6 @@
         </div>
     </footer>
 
-
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
     <script src="js/popper.min.js"></script>
     <!-- Bootstrap js -->
@@ -164,6 +165,6 @@
     <script src="js/plugins.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
-    @RenderSection("Scripts", required: false)
+
 </body>
 </html>

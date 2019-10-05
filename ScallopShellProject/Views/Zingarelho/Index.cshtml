@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Shop";
+}
+
+@model ScallopShellProject.Models.ZingarelhoViewModel
+
+
+<div class="shop_sidebar_area">
+    <div class="row">
+        <form action="/action_page.php">
+            Enter your name:
+            <input name="firstname" type="text">
+            <br><br>
+            <input type="submit">
+        </form>
+
+        <h1>My First JavaScript</h1>
+
+        <button type="button"
+                onclick="document.getElementById('demo').innerHTML = Date()">
+            Click me to display Date and Time.
+        </button>
+
+        <p id="demo"></p>
+
+
+
+        <table id="tito"></table>
+
+        <table width="100%" id="example">
+            <thead>
+                <tr>
+
+                    <th>Id</th>
+                    <th>Descricao</th>
+                    <th>PrecoUnit</th>
+                    <th>Qtd</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListAllArticles)
+                {
+                    <tr>
+                        <td style="text-align:right">@item.Id</td>
+                        <td style="text-align:right">@item.Descricao</td>
+                        <td style="text-align:right">@item.PrecoUnit.ToString()</td>
+                        <td style="text-align:right">@item.Qtd</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+
+        $('#example').DataTable();
+
+    });
+
+
+
+</script>
