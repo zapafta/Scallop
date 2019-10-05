@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataProj.Models
 {
-   public class Image
+    public class Image
     {
 
         [Key]

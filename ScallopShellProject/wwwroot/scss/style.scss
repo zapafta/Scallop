@@ -1352,28 +1352,34 @@ img {
 .footer_area {
     position: relative;
     z-index: 1;
-    background-color: #252525;
+    background-color: #a7a8a7;
     padding: 80px 0;
+
     .single_widget_area {
         .copywrite {
             font-size: 12px;
             color: rgba(255, 255, 255, 0.4);
             margin-top: 10px;
+
             a {
                 font-size: 12px;
                 color: rgba(255, 255, 255, 0.4);
+
                 &:hover {
                     color: #fff;
                 }
             }
         }
+
         .footer_menu {
             position: relative;
             z-index: 1;
             margin-left: auto;
+
             .navbar {
                 padding: 0;
             }
+
             .navbar-nav {
                 .nav-item {
                     .nav-link {
@@ -1381,22 +1387,27 @@ img {
                         color: #fff;
                         text-transform: uppercase;
                         font-size: 14px;
+
                         @media #{$breakpoint-md} {
                             padding: 10px 0;
                         }
+
                         @media #{$breakpoint-xs} {
                             padding: 10px 0;
                         }
+
                         &:hover,
                         &:focus {
                             color: $bg-default;
                         }
                     }
+
                     &.active {
                         .nav-link {
                             color: $bg-default;
                         }
                     }
+
                     &:last-child {
                         .nav-link {
                             padding-right: 0;

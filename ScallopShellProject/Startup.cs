@@ -40,7 +40,7 @@ namespace ScallopShellProject
 
 
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseMySql(Configuration.GetConnectionString("DefaultMySql")));
 
 
             services.AddTransient<ArticleRepository>();

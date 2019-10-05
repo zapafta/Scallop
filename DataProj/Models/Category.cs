@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataProj.Models
 {
-  public  class Article
+  public class Category
     {
 
         [Key]
@@ -19,31 +19,8 @@ namespace DataProj.Models
         [Required(ErrorMessage = "Descricao is required")]
         public string Descricao { get; set; }
 
-
         [Display(Order = 2)]
-        [Required(ErrorMessage = "PrecoUnit is required")]
-        public decimal PrecoUnit { get; set; }
-
-        [Display(Order = 3)]
-        [Required(ErrorMessage = "Qtd is required")]
-        public int Qtd { get; set; }
-
-        [Display(Order = 4)]
         [Required(ErrorMessage = "Active is required")]
         public bool Active { get; set; }
-
-        [Display(Order = 5)]
-        [ForeignKey("Image")]
-        public Guid IdImage { get; set; }
-        public Image Image { get; set; }
-
-
-
-        [Display(Order = 5)]
-        [ForeignKey("Category")]
-        public Guid IdCategory { get; set; }
-        public Category Category { get; set; }
-
-
     }
 }

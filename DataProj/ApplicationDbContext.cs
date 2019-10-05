@@ -19,6 +19,7 @@ namespace DataProj
         public virtual DbSet<Article> Article { get; set; }
 
         public virtual DbSet<Image> Image { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
 
 
 
