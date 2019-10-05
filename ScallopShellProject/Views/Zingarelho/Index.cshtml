@@ -5,65 +5,84 @@
 @model ScallopShellProject.Models.ZingarelhoViewModel
 
 
-<div class="shop_sidebar_area">
-    <div class="row">
-        <form action="/action_page.php">
-            Enter your name:
-            <input name="firstname" type="text">
-            <br><br>
-            <input type="submit">
-        </form>
+//VIEW EDIT PRODUTO
+<style>
 
-        <h1>My First JavaScript</h1>
-
-        <button type="button"
-                onclick="document.getElementById('demo').innerHTML = Date()">
-            Click me to display Date and Time.
-        </button>
-
-        <p id="demo"></p>
+    #dropzone {
+  border: 1px solid blue;
+  width: 300px;
+  height: 300px;
+}
 
 
+</style>
 
-        <table id="tito"></table>
+    <div class="amado_product_area section-padding-100">
+        <div class="row">
+            <form class="form-control" action="/action_page.php">
+                Descricao:
+                <input required name="Descricao" id="Descricao" type="text">
+                PrecoUnit:
+                <input required name="PrecoUnit" id="PrecoUnit" type="number">
+                Qtd:
+                <input required name="Qtd" id="Qtd" type="number">
+                <br>
+                <input type="radio" name="active" value="1"> Active<br>
+                <input type="radio" name="active" value="0"> Inactive
+                <h4>Drag file(s) from desktop to blue dropzone.<br>Only image files will be processed.</h4>
+                <div id="dropzone"></div>
+                <div id="preview"></div>
+                <br><br>
+                <input id="" type="submit">
+            </form>
+        </div>
 
-        <table width="100%" id="example">
-            <thead>
-                <tr>
 
-                    <th>Id</th>
-                    <th>Descricao</th>
-                    <th>PrecoUnit</th>
-                    <th>Qtd</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.ListAllArticles)
-                {
+
+
+        <div class="row">
+            <table width="100%" id="example" class="table-responsive-lg">
+                <thead>
                     <tr>
-                        <td style="text-align:right">@item.Id</td>
-                        <td style="text-align:right">@item.Descricao</td>
-                        <td style="text-align:right">@item.PrecoUnit.ToString()</td>
-                        <td style="text-align:right">@item.Qtd</td>
 
+                        <th>Id</th>
+                        <th>Descricao</th>
+                        <th>PrecoUnit</th>
+                        <th>Qtd</th>
+                        <th>-</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListAllArticles)
+                    {
+                        <tr>
+                            <td style="text-align:right">@item.Id</td>
+                            <td style="text-align:right">@item.Descricao</td>
+                            <td style="text-align:right">@item.PrecoUnit.ToString("0.##")</td>
+                            <td style="text-align:right">@item.Qtd</td>
+                            <td style="text-align:right">
+                                <button type="button" onclick="alert('Hello world!')">Click Me!</button>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
     </div>
-</div>
 
 
 
-<script>
+        <script>
 
-    $(document).ready(function () {
-
-
-        $('#example').DataTable();
-
-    });
+            $(document).ready(function () {
 
 
+                $('#example').DataTable();
 
-</script>
+            });
+
+
+
+        </script>
