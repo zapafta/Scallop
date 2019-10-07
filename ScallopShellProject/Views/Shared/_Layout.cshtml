@@ -30,6 +30,8 @@
 </head>
 <body>
 
+ 
+
     <div class="search-wrapper section-padding-100">
         <div class="search-close">
             <i class="fa fa-close" aria-hidden="true"></i>
@@ -66,23 +68,23 @@
             </div>
             <!-- Logo -->
             <div class="logo">
-                <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+                <a href="@Url.Action("Index", "Home")"><img src="img/core-img/logo.png" alt=""></a>
             </div>
             <!-- Amado Nav -->
             <nav class="amado-nav">
                 <ul>
                     <li class="active">  <a href="@Url.Action("Index", "Home")">PaginaInicial</a>
                     <li>   <a href="@Url.Action("Index", "Shop")">Loja</a></li>
-                    <li><a href="product-details.html">Produtos</a></li>
-                    <li><a href="cart.html">Carrinho</a></li>
-                    <li><a href="checkout.html">Checkout</a></li>
+                    <li><a href="@Url.Action("Index", "Shop")">Produtos</a></li>
+                    <li><a href="@Url.Action("Index", "Shop")" Carrinho</a></li>
+                    <li><a href="@Url.Action("Index", "Shop")" Checkout</a></li>
                 </ul>
             </nav>
-            <!-- Button Group -->
+
             @*<div class="amado-btn-group mt-30 mb-100">
-                    <a href="#" class="btn amado-btn mb-15">%Discount%</a>
-                    <a href="#" class="btn amado-btn active">New this week</a>
-                </div>*@
+            <a href="#" class="btn amado-btn mb-15">%Discount%</a>
+            <a href="#" class="btn amado-btn active">New this week</a>
+        </div>*@
             <!-- Cart Menu -->
             <div class="cart-fav-search mb-100">
                 <a href="cart.html" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
@@ -147,6 +149,10 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="checkout.html">Checkout</a>
                                         </li>
+
+
+
+
                                     </ul>
                                 </div>
                             </nav>

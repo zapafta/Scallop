@@ -15,7 +15,8 @@ namespace ScallopShellProject.Models
 
         public Article Article { get; set; }
 
-        public Image Image { get; set; }
+        public string ListImage { get; set; }
+
 
 
 }
