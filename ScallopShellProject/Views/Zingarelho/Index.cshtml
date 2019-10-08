@@ -5,78 +5,88 @@
 @model ScallopShellProject.Models.ZingarelhoViewModel
 
 
-    <div class="form-control">
-        <div class="row">
-            <form class="form-control" method="post" id="articleForm" action="@Url.Action("SaveArticle", "Zingarelho")">
-                <h1> ÁREA DO ARTIGO</h1>
+<div class="form-control">
+    <div class="row">
+        <form class="form-control" method="post" id="articleForm">
+            <h1> ÁREA DO ARTIGO</h1>
+            <p id="error" class="alert-danger">
+            </p>
 
-                Descricao:
-                <input class="col-1" required name="Article.Descricao" id="Descricao" type="text">
-                PrecoUnit:
-                <input class="col-1" required name="Article.PrecoUnit" pattern="\d*([.,\/]?\d+)" id="PrecoUnit" type="text">
-                Qtd:
-                <input class="col-1" required name="Article.Qtd" id="Qtd" type="number">
-                <div class="col-1">
-
-                    <select class="form-control" id="sel1" name="Article.IdCategory">
-                        @foreach (var item in Model.ListAllCategories)
-                        {
-                            <option value="@item.Id">@item.Descricao</option>
-                        }
+            <p id="sucesso" class="alert-success">
+            </p>
 
 
+            <p id="ArtigoEditado" class="alert-success">
+            </p>
 
-                    </select>
+            Descricao:
+            <input class="col-1" required name="Article.Descricao" id="Descricao" type="text">
+            PrecoUnit:
+            <input class="col-1" required name="Article.PrecoUnit" pattern="\d*([.,\/]?\d+)" id="PrecoUnit" type="text">
+            Qtd:
+            <input class="col-1" required name="Article.Qtd" id="Qtd" type="number">
+       
+
+                <select  id="selectArt" name="Article.IdCategory">
+                    @foreach (var item in Model.ListAllCategories)
+                    {
+                        <option value="@item.Id">@item.Descricao</option>
+                    }
+
+
+
+                </select>
+
+   
+            <br />
+            <br />
+            <div class="col-3">
+                <div class="custom-control custom-radio">
+
+                    <input type="radio" class="custom-control-input text" id="active" name="Article.active" value="1">
+                    <label class="custom-control-label" for="active">Active</label>
+                </div>
+            </div>
+            <div class="col-3">
+
+                <div class="custom-control custom-radio">
+
+                    <input type="radio" class="custom-control-input" id="inactive" name="Article.active" value="0">
+                    <label class="custom-control-label" for="inactive">Inactive</label>
 
                 </div>
-                <br />
-                <br />
-                <div class="col-3">
-                    <div class="custom-control custom-radio">
+            </div>
 
-                        <input type="radio" class="custom-control-input text" id="active" name="Article.active" value="1">
-                        <label class="custom-control-label" for="active">Active</label>
-                    </div>
-                </div>
-                <div class="col-3">
+            <br />
+            <br />
+            <br />
+            <input type="file" id="files" name="files" />
+            <br />
 
-                    <div class="custom-control custom-radio">
-
-                        <input type="radio" class="custom-control-input" id="inactive" name="Article.active" value="0">
-                        <label class="custom-control-label" for="inactive">Inactive</label>
-
-                    </div>
-                </div>
-
-                <br />
-                <br />
-                <br />
-                <input type="file" id="files" name="files" />
-                <br />
-
-                <input type="hidden" id="base64" name="ListImage" />
+            <input type="hidden" id="base64" name="ListImage" />
 
 
-                <input type="submit">
+            <input type="submit" onclick="saveArticle()">
 
 
 
-            </form>
-        </div>
-        <br />
-        <br />
-        
+        </form>
+    </div>
+    <br />
+    <br />
 
+    <div style="margin-left:250px">
 
         <div class="row">
             <table width="100%" id="example" class="table-bordered embed-responsive-item">
                 <thead>
                     <tr>
 
-                        <th>Id</th>
+
                         <th>Descricao</th>
                         <th>PrecoUnit</th>
                         <th>Qtd</th>
+                        <th>Active</th>
                         <th>-</th>
                     </tr>
                 </thead>
@@ -84,12 +94,13 @@
                     @foreach (var item in Model.ListAllArticles)
                     {
                         <tr>
-                            <td style="text-align:right">@item.Id</td>
+
                             <td style="text-align:right">@item.Descricao</td>
                             <td style="text-align:right">@item.PrecoUnit.ToString("0.##")</td>
                             <td style="text-align:right">@item.Qtd</td>
+                            <td style="text-align:right">@item.Active</td>
                             <td style="text-align:right">
-                                <button type="button" onclick="alert('Hello world!')">Edit</button>
+                                <button type="button" onclick="EditArticle('@item.Id')">Edit</button>
                             </td>
 
                         </tr>
@@ -97,8 +108,8 @@
                 </tbody>
             </table>
         </div>
-
     </div>
+</div>
 
 
 
@@ -106,32 +117,113 @@
 
     $(document).ready(function () {
 
-if (window.File && window.FileReader && window.FileList && window.Blob) {
-  document.getElementById('files').addEventListener('change', handleFileSelect, false);
-} else {
-  alert('The File APIs are not fully supported in this browser.');
-}
+
+
+
+
+
+
+
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            document.getElementById('files').addEventListener('change', handleFileSelect, false);
+        } else {
+            alert('The File APIs are not fully supported in this browser.');
+        }
         $('#example').DataTable();
+
 
     });
 
-function handleFileSelect(evt) {
-  var f = evt.target.files[0]; // FileList object
-  var reader = new FileReader();
-  // Closure to capture the file information.
-  reader.onload = (function(theFile) {
-    return function(e) {
-      var binaryData = e.target.result;
-      //Converting Binary Data to base 64
-      var base64String = window.btoa(binaryData);
-      //showing file converted to base64
-      document.getElementById('base64').value = base64String;
-    
-    };
-  })(f);
-  // Read in the image file as a data URL.
-  reader.readAsBinaryString(f);
-}
+    function handleFileSelect(evt) {
+        var f = evt.target.files[0]; // FileList object
+        var reader = new FileReader();
+        // Closure to capture the file information.
+        reader.onload = (function (theFile) {
+            return function (e) {
+                var binaryData = e.target.result;
+                //Converting Binary Data to base 64
+                var base64String = window.btoa(binaryData);
+                //showing file converted to base64
+                document.getElementById('base64').value = base64String;
+
+            };
+        })(f);
+        // Read in the image file as a data URL.
+        reader.readAsBinaryString(f);
+    }
+
+
+    function saveArticle() {
+
+        var datah = $("#articleForm").serialize();
+        $.ajax({
+            type: 'POST',
+            url: '/Zingarelho/SaveArticle',
+            data: datah,
+            success: function (dados) {
+                debugger
+                if (dados == "1") {
+                    $("#sucesso").text('Criado com Sucesso');
+                } else {
+                    $("#error").text(dados);
+                }
+
+            }
+        });
+    }
+
+
+    function EditArticle(id) {
+
+
+        debugger
+
+
+
+        $.ajax({
+            type: 'GET',
+            url: '/Zingarelho/EditArticle',
+            data: {
+                'id': id
+
+            },
+            success: function (dados) {
+
+                debugger
+
+                $("#Descricao").val(dados.Article.Descricao);
+                $("#PrecoUnit").val(dados.Article.PrecoUnit);
+                $("#Qtd").val(dados.Article.Qtd);
+
+
+                if (dados.Article.Active == true) {
+
+                    $('#active').prop('checked', true);
+                    $('#inactive').prop('checked', false);
+                } else {
+
+                    $('#inactive').prop('checked', true);
+                    $('#active').prop('checked', false);
+                }
+
+
+
+
+
+
+    $('#selectArt').append('<option value="' + dados.Article.Category.Id + '" selected="selected">' + dados.Article.Category.Descricao + '</option>'); 
+
+
+                $("#selectArt").filter(function() {
+  //may want to use $.trim in here
+  return $(this).text() == dados.Article.Category.Descricao;
+}).prop('selected', true);
+ 
+            }
+        });
+    }
+
+
 
 
 

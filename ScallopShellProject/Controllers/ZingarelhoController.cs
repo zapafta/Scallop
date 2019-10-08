@@ -24,7 +24,7 @@ namespace ScallopShellProject.Controllers
             _imageRepository = imageRepository;
 
         }
-        public IActionResult Index( string pw="")
+        public IActionResult Index(string pw = "")
         {
 
 
@@ -52,42 +52,73 @@ namespace ScallopShellProject.Controllers
             return View(zinga);
         }
 
-
-        public IActionResult SaveArticle(ZingarelhoViewModel zinga)
+        public ZingarelhoViewModel EditArticle(string id)
         {
+            ZingarelhoViewModel zinga = new ZingarelhoViewModel();
 
 
+            zinga.Article=_articleRepository.GetArticleById(Guid.Parse(id));
 
-
-
-
-
-            List<Image> imageToSave = new List<Image>();
-
-            Image image = new Image();
-            image.Id = Guid.NewGuid();
-            image.ImageByte = Convert.FromBase64String(zinga.ListImage);
-
-            imageToSave.Add(image);
-
-            _articleRepository.SaveArticle(zinga.Article, imageToSave);
-
-            
-      
-
-
-            string wp = "Jogos2009";
-
-
-
-
-
+        
             zinga.ListAllCategories = _categoryRepository.GetCategories();
             zinga.ListAllArticles = _articleRepository.GetArticles();
 
 
 
-            return View("Zingarelho?pw=Jogos2009", zinga);
+
+
+
+            return (zinga);
+        }
+
+
+            public string SaveArticle(ZingarelhoViewModel zinga)
+        {
+
+
+            try
+            {
+
+                if (zinga.Article.PrecoUnit == 0)
+                {
+                    throw new Exception("Nao pode ser zero");
+                }
+
+                if (zinga.Article.Descricao == "")
+                {
+                    throw new Exception("Nao ser vazia a descricao");
+                }
+
+                if (string.IsNullOrEmpty(zinga.ListImage))
+                {
+                    throw new Exception("Temos que associar pelo menos uma imagem ao artigo");
+                }
+
+                List<Image> imageToSave = new List<Image>();
+                Image image = new Image();
+                image.Id = Guid.NewGuid();
+                image.ImageByte = Convert.FromBase64String(zinga.ListImage);
+                imageToSave.Add(image);
+                
+                _articleRepository.SaveArticle(zinga.Article, imageToSave);
+                
+            
+
+                zinga.ListAllCategories = _categoryRepository.GetCategories();
+                zinga.ListAllArticles = _articleRepository.GetArticles();
+
+
+
+                return "1";
+
+            }
+            catch (Exception ex)
+            {
+
+                return ex.Message;
+            }
+
+
         }
 
 

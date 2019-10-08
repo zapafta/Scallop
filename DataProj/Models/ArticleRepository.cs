@@ -25,6 +25,16 @@ namespace DataProj.Models
 
 
 
+        public Article GetArticleById( Guid id)
+        {
+
+            Article article = context.Article.Where(t => t.Id == id).FirstOrDefault();
+            return article;
+        }
+
+
+
+
 
         public List<Article> GetArticlesByCategories(List<Guid> ListFilterd)
         {
