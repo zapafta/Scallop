@@ -19,7 +19,18 @@ namespace DataProj.Models
         {
 
             List<Article> l = context.Article.ToList();
-            return l;
+            List<Article> lReturn = new List<Article>();
+
+            //addimage
+            foreach (var item in l)
+            {
+
+                item.Image = context.Image.Where(t => t.Id == item.IdImage).FirstOrDefault();
+                lReturn.Add(item);
+            }
+
+
+            return lReturn;
         }
 
 
@@ -29,6 +40,7 @@ namespace DataProj.Models
         {
 
             Article article = context.Article.Where(t => t.Id == id).FirstOrDefault();
+            article.Image = context.Image.Where(t => t.Id == article.IdImage).FirstOrDefault();
             return article;
         }
 

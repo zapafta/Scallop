@@ -5,14 +5,14 @@
 @model ScallopShellProject.Models.ZingarelhoViewModel
 
 
-<div class="form-control">
+<div class="form-control" style="display:inline-block">
     <div class="row">
         <form class="form-control" method="post" id="articleForm">
             <h1> ÁREA DO ARTIGO</h1>
             <p id="error" class="alert-danger">
             </p>
 
-            <p id="sucesso" class="alert-success">
+            <p id="sucesso" style="font-size:larger" class="alert-success">
             </p>
 
 
@@ -25,21 +25,25 @@
             <input class="col-1" required name="Article.PrecoUnit" pattern="\d*([.,\/]?\d+)" id="PrecoUnit" type="text">
             Qtd:
             <input class="col-1" required name="Article.Qtd" id="Qtd" type="number">
-       
-
-                <select  id="selectArt" name="Article.IdCategory">
-                    @foreach (var item in Model.ListAllCategories)
-                    {
-                        <option value="@item.Id">@item.Descricao</option>
-                    }
 
 
 
-                </select>
 
-   
+
+
+            <br />
+            <select id="selectArt" name="Article.IdCategory" class="form-control form-control-lg">
+                @foreach (var item in Model.ListAllCategories)
+                {
+                    <option value="@item.Id">@item.Descricao</option>
+                }
+
+
+
+            </select>
             <br />
             <br />
+
             <div class="col-3">
                 <div class="custom-control custom-radio">
 
@@ -60,10 +64,12 @@
             <br />
             <br />
             <br />
-            <input type="file" id="files" name="files" />
+            <input type="file" id="files" name="files" multiple />
+
             <br />
 
-            <input type="hidden" id="base64" name="ListImage" />
+            <input type="hidden" id="base64" name="ListImage"  />
+            <img id="ItemPreview" src="" />
 
 
             <input type="submit" onclick="saveArticle()">
@@ -87,23 +93,34 @@
                         <th>PrecoUnit</th>
                         <th>Qtd</th>
                         <th>Active</th>
+                        <th>Imagem</th>
                         <th>-</th>
                     </tr>
                 </thead>
                 <tbody>
+
+              
+
                     @foreach (var item in Model.ListAllArticles)
                     {
-                        <tr>
+                    <tr>
+                        @{
+                            var base64 = Convert.ToBase64String(item.Image.ImageByte);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        }
+                        <td style="text-align:right">@item.Descricao</td>
+                        <td style="text-align:right">@item.PrecoUnit.ToString("0.##")</td>
+                        <td style="text-align:right">@item.Qtd</td>
+                        <td style="text-align:right">@item.Active</td>
+                        <td style="text-align:right">
+                            <img id="item" height="35" width="35" src="@imgSrc" />
 
-                            <td style="text-align:right">@item.Descricao</td>
-                            <td style="text-align:right">@item.PrecoUnit.ToString("0.##")</td>
-                            <td style="text-align:right">@item.Qtd</td>
-                            <td style="text-align:right">@item.Active</td>
-                            <td style="text-align:right">
-                                <button type="button" onclick="EditArticle('@item.Id')">Edit</button>
-                            </td>
+                        </td>
+                        <td style="text-align:right">
+                            <button type="button" onclick="EditArticle('@item.Id')">Edit</button>
+                        </td>
 
-                        </tr>
+                    </tr>
                     }
                 </tbody>
             </table>
@@ -119,20 +136,53 @@
 
 
 
-
-
-
-
-
-        if (window.File && window.FileReader && window.FileList && window.Blob) {
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
             document.getElementById('files').addEventListener('change', handleFileSelect, false);
         } else {
             alert('The File APIs are not fully supported in this browser.');
         }
+
+
+
         $('#example').DataTable();
 
 
     });
+
+
+
+    function saveArticle() {
+
+        var datah = $("#articleForm").serialize();
+        debugger
+        $.ajax({
+            type: 'POST',
+            url: '/Zingarelho/SaveArticle',
+            data: datah,
+            success: function (dados) {
+                
+
+                if (dados == "1") {
+                    $("#sucesso").text('Criado com Sucesso');
+                } else {
+                    $("#error").text(dados);
+                }
+
+            },
+            error: function (dados) {
+                debugger
+
+
+                if (dados == "1") {
+                    $("#sucesso").text('Criado com Sucesso');
+                } else {
+                    $("#error").text(dados);
+                }
+            }
+
+        });
+    }
+
 
     function handleFileSelect(evt) {
         var f = evt.target.files[0]; // FileList object
@@ -143,35 +193,22 @@
                 var binaryData = e.target.result;
                 //Converting Binary Data to base 64
                 var base64String = window.btoa(binaryData);
-                //showing file converted to base64
-                document.getElementById('base64').value = base64String;
+                if (document.getElementById('base64').value) {
 
+                    document.getElementById('base64').value = document.getElementById('base64').value + "€" + base64String;
+                } else {
+                    document.getElementById('base64').value = base64String;
+
+                }
+
+
+                //showing file converted to base64
+       
             };
         })(f);
         // Read in the image file as a data URL.
         reader.readAsBinaryString(f);
     }
-
-
-    function saveArticle() {
-
-        var datah = $("#articleForm").serialize();
-        $.ajax({
-            type: 'POST',
-            url: '/Zingarelho/SaveArticle',
-            data: datah,
-            success: function (dados) {
-                debugger
-                if (dados == "1") {
-                    $("#sucesso").text('Criado com Sucesso');
-                } else {
-                    $("#error").text(dados);
-                }
-
-            }
-        });
-    }
-
 
     function EditArticle(id) {
 
@@ -207,18 +244,16 @@
                 }
 
 
+                document.getElementById("ItemPreview").src = "data:image/png;base64," + dados.Article.Image.ImageByte;
+
+
+                    $('#selectArt').val(dados.Article.Category.Id)
+
+
+                $('#selectArt').niceSelect('update');
 
 
 
-
-    $('#selectArt').append('<option value="' + dados.Article.Category.Id + '" selected="selected">' + dados.Article.Category.Descricao + '</option>'); 
-
-
-                $("#selectArt").filter(function() {
-  //may want to use $.trim in here
-  return $(this).text() == dados.Article.Category.Descricao;
-}).prop('selected', true);
- 
             }
         });
     }

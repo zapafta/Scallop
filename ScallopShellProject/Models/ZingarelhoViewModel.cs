@@ -1,4 +1,5 @@
 ﻿using DataProj.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,13 @@ namespace ScallopShellProject.Models
         public string ListImage { get; set; }
 
 
+        public List<IFormFile> FilesPhotos { get; set; }
 
-}
+
+
+
+
+
+
+    }
 }
