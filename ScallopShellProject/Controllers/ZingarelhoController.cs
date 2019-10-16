@@ -94,11 +94,29 @@ namespace ScallopShellProject.Controllers
                     throw new Exception("Temos que associar pelo menos uma imagem ao artigo");
                 }
 
+
+
+               var ListBaseImage= zinga.ListImage.Split("€");
+
                 List<Image> imageToSave = new List<Image>();
-                Image image = new Image();
-                image.Id = Guid.NewGuid();
-                image.ImageByte = Convert.FromBase64String(zinga.ListImage);
-                imageToSave.Add(image);
+                int contador = 0;
+
+                for (int i = 0; i < ListBaseImage.Length; i++)
+                {
+                    if(i>0)
+                    {
+                        Image image = new Image();
+                        image.Id = Guid.NewGuid();
+                        image.ImageByte = Convert.FromBase64String(ListBaseImage[i]);
+                             imageToSave.Add(image);
+                        contador = contador + 1;
+                    }
+                        
+                            
+                            }
+
+               
+               
                 
                 _articleRepository.SaveArticle(zinga.Article, imageToSave);
                 

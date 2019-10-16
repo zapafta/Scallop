@@ -105,7 +105,7 @@
                     {
                     <tr>
                         @{
-                            var base64 = Convert.ToBase64String(item.Image.ImageByte);
+                            var base64 = Convert.ToBase64String(item.ArticleImage[0].Image.ImageByte);
                             var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                         }
                         <td style="text-align:right">@item.Descricao</td>
@@ -185,8 +185,14 @@
 
 
     function handleFileSelect(evt) {
-        var f = evt.target.files[0]; // FileList object
-        var reader = new FileReader();
+
+
+        debugger
+        var f = evt.target.files[0]; 
+
+                for (i = 0; i < evt.target.files.length; i++) {
+                    var f = evt.target.files[i]
+                            var reader = new FileReader();
         // Closure to capture the file information.
         reader.onload = (function (theFile) {
             return function (e) {
@@ -197,7 +203,7 @@
 
                     document.getElementById('base64').value = document.getElementById('base64').value + "€" + base64String;
                 } else {
-                    document.getElementById('base64').value = base64String;
+                    document.getElementById('base64').value = document.getElementById('base64').value + "€" + base64String;
 
                 }
 
@@ -208,6 +214,12 @@
         })(f);
         // Read in the image file as a data URL.
         reader.readAsBinaryString(f);
+
+
+}
+
+        // FileList object
+
     }
 
     function EditArticle(id) {

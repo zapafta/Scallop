@@ -32,18 +32,12 @@ namespace DataProj.Models
         [Required(ErrorMessage = "Active is required")]
         public bool Active { get; set; }
 
-        [Display(Order = 5)]
-        [ForeignKey("Image")]
-        public Guid IdImage { get; set; }
-        public Image Image { get; set; }
-
-
 
         [Display(Order = 5)]
         [ForeignKey("Category")]
         public Guid IdCategory { get; set; }
         public Category Category { get; set; }
 
-
+        public virtual List<ArticleImage> ArticleImage { get; set; }
     }
 }
