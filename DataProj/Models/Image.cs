@@ -20,7 +20,7 @@ namespace DataProj.Models
         public byte[] ImageByte { get; set; }
 
 
-        public virtual List<ArticleImage> ArticleImage { get; set; }
 
     }
+
 }

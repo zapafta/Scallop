@@ -18,7 +18,7 @@
                 <div class="single-products-catagory clearfix">
 
                     @{
-                        var base64 = Convert.ToBase64String(item.ArticleImage[0].Image.ImageByte);
+                        var base64 = Convert.ToBase64String(item.ImageList[0].ImageByte);
                         var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                     }
 

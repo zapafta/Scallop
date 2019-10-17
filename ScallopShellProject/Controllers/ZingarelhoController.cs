@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataProj.Models;
 using Microsoft.AspNetCore.Mvc;
+using Nancy.Json;
+using Newtonsoft.Json;
 using ScallopShellProject.Models;
 
 namespace ScallopShellProject.Controllers
@@ -64,11 +66,12 @@ namespace ScallopShellProject.Controllers
             zinga.ListAllArticles = _articleRepository.GetArticles();
 
 
+            string json = JsonConvert.SerializeObject(zinga, Formatting.Indented);
 
 
 
 
-            return (zinga);
+            return zinga;
         }
 
 

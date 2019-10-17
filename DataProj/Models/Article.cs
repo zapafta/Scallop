@@ -38,6 +38,6 @@ namespace DataProj.Models
         public Guid IdCategory { get; set; }
         public Category Category { get; set; }
 
-        public virtual List<ArticleImage> ArticleImage { get; set; }
+        public virtual List<Image> ImageList { get; set; }
     }
 }

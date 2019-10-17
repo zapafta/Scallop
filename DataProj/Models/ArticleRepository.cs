@@ -18,19 +18,11 @@ namespace DataProj.Models
         public List<Article> GetArticles()
         {
 
-            List<Article> l = context.Article.ToList();
-            List<Article> lReturn = new List<Article>();
-
-            //addimage
-            foreach (var item in l)
-            {
-
-                item.ArticleImage = context.ArticleImage.Include(t=> t.Image).Where(t => t.IdArticle == item.Id).ToList();
-                lReturn.Add(item);
-            }
+            List<Article> l = context.Article.Include(t => t.ImageList).ToList();
+            
 
 
-            return lReturn;
+            return l;
         }
 
 
@@ -40,7 +32,7 @@ namespace DataProj.Models
         {
 
             Article article = context.Article.Where(t => t.Id == id).FirstOrDefault();
-            article.ArticleImage = context.ArticleImage.Where(t => t.IdArticle == article.Id).ToList();
+            //article.ArticleImage = context.ArticleImage.Include(t => t.Image).Select(i=> i.Image).Where(t => t. == article.Id).ToList();
             return article;
         }
 
@@ -77,7 +69,7 @@ namespace DataProj.Models
                 ArticleNew.PrecoUnit = article.PrecoUnit;
                 ArticleNew.Qtd = article.Qtd;
                 ArticleNew.Active = article.Active;
-      
+                ArticleNew.ImageList = images;
                 ArticleNew.IdCategory = article.IdCategory;
                 context.Entry(ArticleNew).State = EntityState.Added;
 
@@ -86,21 +78,6 @@ namespace DataProj.Models
 
 
 
-                List<ArticleImage> ListArticleImageToSave = new List<ArticleImage>();
-                foreach (var item in images)
-                {
-                    ArticleImage articleImage = new ArticleImage();
-                    articleImage.IdImage = item.Id;
-                    articleImage.IdArticle = ArticleNew.Id;
-                    ListArticleImageToSave.Add(articleImage);
-
-                    context.Image.Add(item);
-                    context.SaveChanges();
-
-                    context.ArticleImage.Add(articleImage);
-                    context.SaveChanges();
-
-                }
 
 
       
@@ -112,7 +89,7 @@ namespace DataProj.Models
                 Verify.PrecoUnit = article.PrecoUnit;
                 Verify.Qtd = article.Qtd;
                 Verify.Active = article.Active;
-             
+                Verify.ImageList = images;
                 Verify.IdCategory = article.IdCategory;
                 context.Entry(Verify).State = EntityState.Modified;
                 context.SaveChanges();
