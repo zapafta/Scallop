@@ -22,16 +22,16 @@
                         var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                     }
 
-
-                    <a href="shop.html">
-                        <img src="@imgSrc" />
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>@(item.PrecoUnit.ToString("0.00")) € </p>
-                            <h4>@item.Descricao</h4>
-                        </div>
-                    </a>
+            
+                        <a href="@Url.Action("Index", "Product") ">
+                            <img src="@imgSrc" />
+                            <!-- Hover Content -->
+                            <div class="hover-content">
+                                <div class="line"></div>
+                                <p>@(item.PrecoUnit.ToString("0.00")) € </p>
+                                <h4>@item.Descricao</h4>
+                            </div>
+                        </a>
                 </div>
                 }
 

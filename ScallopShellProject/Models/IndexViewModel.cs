@@ -11,7 +11,6 @@ namespace ScallopShellProject.Models
 
         public List<Article> Articles { get; set; }
 
-
-
+        public Article article { get; set; }
     }
 }

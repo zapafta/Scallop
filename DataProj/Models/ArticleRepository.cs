@@ -31,8 +31,8 @@ namespace DataProj.Models
         public Article GetArticleById( Guid id)
         {
 
-            Article article = context.Article.Where(t => t.Id == id).FirstOrDefault();
-            //article.ArticleImage = context.ArticleImage.Include(t => t.Image).Select(i=> i.Image).Where(t => t. == article.Id).ToList();
+            Article article = context.Article.Include(t => t.ImageList).Where(t => t.Id == id).FirstOrDefault();
+            
             return article;
         }
 
