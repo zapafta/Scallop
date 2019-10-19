@@ -54,6 +54,30 @@ namespace DataProj.Models
 
 
 
+            foreach (var item in images)
+            {
+                Image VerifyImage = context.Image.Where(t => t.Id == item.Id).FirstOrDefault();
+
+
+                if (VerifyImage == null)
+                {
+                    //Vamos gravar
+                    Image ImageNew = new Image();
+                   
+                    context.Entry(item).State = EntityState.Added;
+                    context.SaveChanges();
+                }
+                else
+                {
+
+                    
+
+                    context.Entry(VerifyImage).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    //Vamos Alterar
+                }
+            }
 
 
 
