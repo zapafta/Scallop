@@ -19,6 +19,8 @@ namespace ScallopShellProject.Controllers
 
 
         {
+
+            
             _articleRepository = articleRepository;
             _categoryRepository = categoryRepository;
             _imageRepository = imageRepository;

@@ -42,7 +42,7 @@ namespace DataProj.Models
 
         public List<Article> GetArticlesByCategories(List<Guid> ListFilterd)
         {
-            List<Article> l = context.Article.Where(t => ListFilterd.Contains(t.IdCategory)).ToList();
+            List<Article> l = context.Article.Include(t=> t.ImageList).Where(t => ListFilterd.Contains(t.IdCategory)).ToList();
             return l;
         }
 

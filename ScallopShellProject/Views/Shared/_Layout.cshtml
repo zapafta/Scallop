@@ -31,7 +31,7 @@
 </head>
 <body>
 
- 
+
 
     <div class="search-wrapper section-padding-100">
         <div class="search-close">
@@ -72,20 +72,23 @@
                 <a href="@Url.Action("Index", "Home")"><img src="img/core-img/logo.png" alt=""></a>
             </div>
             <!-- Amado Nav -->
-            <nav class="amado-nav">
-                <ul>
-                    <li class="active">  <a href="@Url.Action("Index", "Home")">PaginaInicial</a>
-                    <li>   <a href="@Url.Action("Index", "Shop")">Loja</a></li>
-                    <li><a href="@Url.Action("Index", "Shop")">Produtos</a></li>
-                    <li><a href="@Url.Action("Index", "Shop")" Carrinho</a></li>
-                    <li><a href="@Url.Action("Index", "Shop")" Checkout</a></li>
-                </ul>
-            </nav>
+
+            <div id="navlateral">
+                <nav  class="amado-nav">
+                    <ul>
+                        <li class=" li active">  <a href="@Url.Action("Index", "Home")">PaginaInicial</a>
+                        <li><a  href="@Url.Action("Index", "Shop")">Loja</a></li>
+                        <li><a  href="@Url.Action("Index", "Shop")">Produtos</a></li>
+                        <li><a  href="@Url.Action("Index", "Shop")"</a></li>
+                        <li><a  href="@Url.Action("Index", "Shop")"</a></li>
+                    </ul>
+                </nav>
+            </div>
 
             @*<div class="amado-btn-group mt-30 mb-100">
-            <a href="#" class="btn amado-btn mb-15">%Discount%</a>
-            <a href="#" class="btn amado-btn active">New this week</a>
-        </div>*@
+                    <a href="#" class="btn amado-btn mb-15">%Discount%</a>
+                    <a href="#" class="btn amado-btn active">New this week</a>
+                </div>*@
             <!-- Cart Menu -->
             <div class="cart-fav-search mb-100">
                 <a href="cart.html" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
@@ -132,32 +135,7 @@
                 <div class="col-12 col-lg-8">
                     <div class="single_widget_area">
                         <!-- Footer Menu -->
-                        <div class="footer_menu">
-                            <nav class="navbar navbar-expand-lg justify-content-end">
-                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                                <div class="collapse navbar-collapse" id="footerNavContent">
-                                    <ul class="navbar-nav ml-auto">
-                                        <li class="nav-item active">
-                                        <li class="active">  <a href="@Url.Action("Index", "Home")">PaginaInicial</a>
-                                        <li>   <a href="@Url.Action("Index", "Shop")">Loja</a></li>
-
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("Index", "Home")">Produtos</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="cart.html">Carrinho</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="checkout.html">Checkout</a>
-                                        </li>
-
-
-
-
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
+               
                     </div>
                 </div>
             </div>
@@ -173,5 +151,39 @@
     <!-- Active js -->
     <script src="js/active.js"></script>
 
+
+    
+    <!-- Popper js -->
+    <script src="js/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Plugins js -->
+    <script src="js/plugins.js"></script>
+    <!-- Active js -->
+    <script src="~/js/active.js"></script>
+    <script>
+
+        
+    $(document).ready(function () {
+        debugger
+
+
+// Add active class to the current button (highlight it)
+var header = document.getElementById("navlateral");
+var btns = header.getElementsByTagName("LI");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+  var current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(" active", "");
+  this.className += " active";
+  });
+}
+
+
+    })
+
+ 
+
+    </script>
 </body>
 </html>

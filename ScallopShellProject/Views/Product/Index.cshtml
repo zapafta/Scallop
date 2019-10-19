@@ -1,6 +1,8 @@
 ﻿
 
 @model ScallopShellProject.Models.IndexViewModel
+
+
 <div class="single-product-area section-padding-100 clearfix">
     <div class="container-fluid">
 
@@ -11,6 +13,8 @@
                     <div id="product_details_slider" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
 
+
+                      
                             @foreach (var item in Model.article.ImageList)
                             {
 
@@ -18,7 +22,7 @@
                                     var base64 = Convert.ToBase64String(item.ImageByte);
                                     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
-                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url('@imgSrc')">
+                                    <li  class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url('@imgSrc')">
                                     </li>
                                 }
 
@@ -28,29 +32,47 @@
                         </ol>
                         <div class="carousel-inner">
                             @*<div class="carousel-item active">
-                                <a class="gallery_img" href="img/product-img/pro-big-1.jpg">
-                                    <img class="d-block w-100" src="img/product-img/pro-big-1.jpg" alt="First slide">
-                                </a>
-                            </div>*@
+            <a class="gallery_img" href="img/product-img/pro-big-1.jpg">
+                <img class="d-block w-100" src="img/product-img/pro-big-1.jpg" alt="First slide">
+            </a>
+        </div>*@
 
-                            @foreach (var item in Model.article.ImageList)
+                            @for (int i = 0; i < Model.article.ImageList.Count; i++)
                             {
 
+
+
+
+
                                 {
-                                    var base64 = Convert.ToBase64String(item.ImageByte);
+                                    var base64 = Convert.ToBase64String(Model.article.ImageList[i].ImageByte);
                                     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
-                                    <div class="carousel-item active">
-                                        <a class="gallery_img" href="img/product-img/pro-big-2.jpg">
-                                            <img class="d-block w-100" src="@imgSrc" alt="Second slide">
-                                        </a>
-                                    </div>
+                                    if (i == 0)
+                                    {
+                                        <div class="carousel-item active">
+                                            <a class="gallery_img" href="@imgSrc">
+                                                <img class="d-block w-100" src="@imgSrc" alt="Second slide">
+                                            </a>
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="carousel-item">
+                                            <a class="gallery_img" href="@imgSrc">
+                                                <img class="d-block w-100" src="@imgSrc" alt="Second slide">
+                                            </a>
+                                        </div>
+                                    }
+
+
                                 }
 
 
                             }
 
-                       
+
                         </div>
                     </div>
                 </div>
@@ -60,9 +82,9 @@
                     <!-- Product Meta Data -->
                     <div class="product-meta-data">
                         <div class="line"></div>
-                        <p class="product-price">$180</p>
+                        <p class="product-price">@Model.article.PrecoUnit.ToString("0.00")</p>
                         <a href="product-details.html">
-                            <h6>White Modern Chair</h6>
+                            <h6>@Model.article.Descricao</h6>
                         </a>
                         <!-- Ratings & Review -->
                         <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
@@ -87,19 +109,43 @@
 
                     <!-- Add to Cart Form -->
                     @*<form class="cart clearfix" method="post">
-                        <div class="cart-btn d-flex mb-50">
-                            <p>Qty</p>
-                            <div class="quantity">
-                                <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                                <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1">
-                                <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
+                            <div class="cart-btn d-flex mb-50">
+                                <p>Qty</p>
+                                <div class="quantity">
+                                    <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1">
+                                    <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
+                                </div>
                             </div>
-                        </div>
-                        <button type="submit" name="addtocart" value="5" class="btn amado-btn">Add to cart</button>
-                    </form>*@
+                            <button type="submit" name="addtocart" value="5" class="btn amado-btn">Add to cart</button>
+                        </form>*@
 
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+
+    $(document).ready(function () {
+
+        $(".carousel-item").find("[href]").each(function () {
+        //    if (this.href.split("?")[0] == window.location.href.split("?")[0]) {
+        //        $(this).addClass("active");
+        //    }
+        //});
+
+
+
+        //$("#ati").find("[href]").each(function () {
+        //    if (this.href.split("?")[0] == window.location.href.split("?")[0]) {
+        //        $(this).addClass("active");
+        //    }
+        //});
+
+
+    })
+
+
+</script>
+
