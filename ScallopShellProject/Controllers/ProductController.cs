@@ -26,13 +26,13 @@ namespace ScallopShellProject.Controllers
             _imageRepository = imageRepository;
 
         }
-        public IActionResult Index(string id= "e16c617f-be3d-49bd-b882-b1796edf6603")
+        public IActionResult Index(string name = "e16c617f-be3d-49bd-b882-b1796edf6603")
         {
             IndexViewModel view = new IndexViewModel();
 
             
 
-            view.article = _articleRepository.GetArticleById(Guid.Parse(id));
+            view.article = _articleRepository.GetArticleById(Guid.Parse(name));
 
 
 

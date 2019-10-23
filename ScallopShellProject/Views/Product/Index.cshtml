@@ -13,22 +13,24 @@
                     <div id="product_details_slider" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
 
+                            @{int contador = 0;
 
-                      
-                            @foreach (var item in Model.article.ImageList)
-                            {
-
+                                @foreach (var item in Model.article.ImageList)
                                 {
-                                    var base64 = Convert.ToBase64String(item.ImageByte);
-                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
-                                    <li  class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url('@imgSrc')">
-                                    </li>
+                                    {
+                                        var base64 = Convert.ToBase64String(item.ImageByte);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                                        <li class="active" data-target="#product_details_slider" data-slide-to="@contador" style="background-image: url('@imgSrc')">
+                                        </li>
+
+                                        contador = contador + 1;
+                                    }
+
+
                                 }
-
-
                             }
-
                         </ol>
                         <div class="carousel-inner">
                             @*<div class="carousel-item active">
@@ -82,43 +84,36 @@
                     <!-- Product Meta Data -->
                     <div class="product-meta-data">
                         <div class="line"></div>
-                        <p class="product-price">@Model.article.PrecoUnit.ToString("0.00")</p>
+                        <p class="product-price">@Model.article.PrecoUnit.ToString("0.00") €</p>
                         <a href="product-details.html">
                             <h6>@Model.article.Descricao</h6>
                         </a>
                         <!-- Ratings & Review -->
-                        <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
-                            <div class="ratings">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            </div>
-                            <div class="review">
-                                <a href="#">Write A Review</a>
-                            </div>
-                        </div>
+                        @*  <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
+        <div class="ratings">
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+        </div>
+        <div class="review">
+            <a href="#">Write A Review</a>
+        </div>
+                    </div>
                         <!-- Avaiable -->
-                        <p class="avaibility"><i class="fa fa-circle"></i> In Stock</p>
+                        @*<p class="avaibility"><i class="fa fa-circle"></i> In Stock</p>*@
                     </div>
 
                     <div class="short_overview my-5">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid quae eveniet culpa officia quidem mollitia impedit iste asperiores nisi reprehenderit consequatur, autem, nostrum pariatur enim?</p>
+                        <p>DESCRICAO AQUI FAZ SENTIDO??</p>
                     </div>
 
                     <!-- Add to Cart Form -->
-                    @*<form class="cart clearfix" method="post">
-                            <div class="cart-btn d-flex mb-50">
-                                <p>Qty</p>
-                                <div class="quantity">
-                                    <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1">
-                                    <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
-                                </div>
-                            </div>
+                    <form class="cart clearfix" method="post">
+                 
                             <button type="submit" name="addtocart" value="5" class="btn amado-btn">Add to cart</button>
-                        </form>*@
+                        </form>
 
                 </div>
             </div>
@@ -127,24 +122,24 @@
 </div>
 <script>
 
-    $(document).ready(function () {
+    //$(document).ready(function () {
 
-        $(".carousel-item").find("[href]").each(function () {
-        //    if (this.href.split("?")[0] == window.location.href.split("?")[0]) {
-        //        $(this).addClass("active");
-        //    }
-        //});
-
-
-
-        //$("#ati").find("[href]").each(function () {
-        //    if (this.href.split("?")[0] == window.location.href.split("?")[0]) {
-        //        $(this).addClass("active");
-        //    }
-        //});
+    //    $(".carousel-item").find("[href]").each(function () {
+    //    //    if (this.href.split("?")[0] == window.location.href.split("?")[0]) {
+    //    //        $(this).addClass("active");
+    //    //    }
+    //    //});
 
 
-    })
+
+    //    //$("#ati").find("[href]").each(function () {
+    //    //    if (this.href.split("?")[0] == window.location.href.split("?")[0]) {
+    //    //        $(this).addClass("active");
+    //    //    }
+    //    //});
+
+
+    //})
 
 
 </script>

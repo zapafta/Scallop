@@ -23,7 +23,7 @@
                     }
 
             
-                        <a href="@Url.Action("Index", "Product") ">
+                        <a href="@Url.Action("Index", "Product", new { name = item.Id.ToString()}) ">
                             <img src="@imgSrc" />
                             <!-- Hover Content -->
                             <div class="hover-content">
