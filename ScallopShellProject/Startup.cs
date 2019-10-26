@@ -28,14 +28,10 @@ namespace ScallopShellProject
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        [Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+
 
 
 
@@ -43,9 +39,22 @@ namespace ScallopShellProject
             options.UseMySql(Configuration.GetConnectionString("DefaultMySql")));
 
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+
             services.AddTransient<ArticleRepository>();
             services.AddTransient<CategoryRepository>();
             services.AddTransient<ImageRepository>();
+            services.AddSession(opts =>
+            {
+                opts.CookieName = ".NetEscapades.Session";
+                opts.IdleTimeout = TimeSpan.FromMinutes(10);
+            });
 
 
             services.AddMvc()
@@ -54,11 +63,10 @@ namespace ScallopShellProject
                     opts => { opts.ResourcesPath = "Resources"; })
                 .AddDataAnnotationsLocalization()
                 .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-               
-
+        
             services.AddSession();
 
-
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

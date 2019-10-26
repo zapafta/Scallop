@@ -140,83 +140,43 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="cart-table-area section-padding-100">
+                <div class="container-fluid">
 
+                    <div class="products-catagories-area clearfix">
+                        <div class="amado-pro-catagory clearfix">
 
-                @foreach (var item in Model.ListArticlesByCategories)
-                {
-
-                    <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-                        <div class="single-product-wrapper">
-                            <!-- Product Image -->
-
-                            @for (int i = 0; i < 1; i++)
+                            @foreach (var item in Model.ListArticlesByCategories)
                             {
 
 
 
+                                <div class="single-products-catagory clearfix">
 
-
-                                {
-                                    var base64 = Convert.ToBase64String(item.ImageList[0].ImageByte);
-                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-
-                                    if (i == 0)
-                                    {
-                                        <img src="@imgSrc" alt="">
-                                    }
-                                    else
-                                    {
-                                        <img class="hover-img" src="@imgSrc" alt="">
+                                    @{
+                                        var base64 = Convert.ToBase64String(item.ImageList[0].ImageByte);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                                     }
 
 
-                                }
-
-
-                            }
-
-                            <!-- Product Description -->
-                            <div class="product-description d-flex align-items-center justify-content-between">
-                                <!-- Product Meta Data -->
-                                <div class="product-meta-data">
-                                    <div class="line"></div>
-                                    <p class="product-price">@item.PrecoUnit.ToString("0.00") € - @item.Category.Descricao  </p>
-                                    <a href="product-details.html">
-                                        <h6>@item.Descricao</h6>
+                                    <a href="@Url.Action("Index", "Product", new { name = item.Id.ToString()}) ">
+                                        <img src="@imgSrc" />
+                                        <!-- Hover Content -->
+                                        <div class="hover-content">
+                                            <div class="line"></div>
+                                            <p>@(item.PrecoUnit.ToString("0.00")) € </p>
+                                            <p>@item.Descricao</p>
+                                        </div>
                                     </a>
                                 </div>
-                                <!-- Ratings & Cart -->
-                                <div class="ratings-cart text-right">
+                            }
 
-                                    <div class="cart">
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
-
-                }
-
-
-
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <!-- Pagination -->
-                    <nav aria-label="navigation">
-                        <ul class="pagination justify-content-end mt-50">
-                            <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                            <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                            <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                            <li class="page-item"><a class="page-link" href="#">04.</a></li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

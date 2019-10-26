@@ -59,39 +59,25 @@ namespace DataProj.Models
         public void SaveArticle(Article article, List<Image> images)
         {
 
-
-
-
             foreach (var item in images)
             {
                 Image VerifyImage = context.Image.Where(t => t.Id == item.Id).FirstOrDefault();
-
-
                 if (VerifyImage == null)
                 {
                     //Vamos gravar
                     Image ImageNew = new Image();
-                   
                     context.Entry(item).State = EntityState.Added;
                     context.SaveChanges();
                 }
                 else
                 {
-
-                    
-
                     context.Entry(VerifyImage).State = EntityState.Modified;
                     context.SaveChanges();
-
                     //Vamos Alterar
                 }
             }
 
-
-
             Article Verify = context.Article.Where(t => t.Id == article.Id).FirstOrDefault();
-               
-
                 if (Verify==null)
             {
                 //Vamos gravar
@@ -103,26 +89,19 @@ namespace DataProj.Models
                 ArticleNew.Active = article.Active;
                 ArticleNew.ImageList = images;
                 ArticleNew.IdCategory = article.IdCategory;
+                ArticleNew.DescricaoLonga = article.DescricaoLonga;
                 context.Entry(ArticleNew).State = EntityState.Added;
-
-
                 context.SaveChanges();
-
-
-
-
-
-      
             }
             else
             {
-
                 Verify.Descricao = article.Descricao;
                 Verify.PrecoUnit = article.PrecoUnit;
                 Verify.Qtd = article.Qtd;
                 Verify.Active = article.Active;
                 Verify.ImageList = images;
                 Verify.IdCategory = article.IdCategory;
+                Verify.DescricaoLonga = Verify.DescricaoLonga;
                 context.Entry(Verify).State = EntityState.Modified;
                 context.SaveChanges();
 

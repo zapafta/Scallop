@@ -21,6 +21,10 @@
 
             Descricao:
             <input class="col-1" required name="Article.Descricao" id="Descricao" type="text">
+
+            DescricaoLONGA:
+            <textarea name="Article.DescricaoLonga" id="DescricaoLonga" cols="40" rows="5"></textarea>
+
             PrecoUnit:
             <input class="col-1" required name="Article.PrecoUnit" pattern="\d*([.,\/]?\d+)" id="PrecoUnit" type="text">
             Qtd:
@@ -68,9 +72,9 @@
 
             <br />
 
-            <input type="hidden" id="base64" name="ListImage"  />
+            <input type="hidden" id="base64" name="ListImage" />
             <div id="theDiv"></div>
-           
+
 
 
             <input type="submit" onclick="saveArticle()">
@@ -242,6 +246,7 @@
                
                 $("#Descricao").val(dados.article.descricao);
                 $("#PrecoUnit").val(dados.article.precoUnit);
+                $("#DescricaoLonga").val(dados.article.descricaoLonga);
                 $("#Qtd").val(dados.article.qtd);
 
 

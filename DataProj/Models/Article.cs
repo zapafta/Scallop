@@ -38,6 +38,11 @@ namespace DataProj.Models
         public Guid IdCategory { get; set; }
         public Category Category { get; set; }
 
+
+        [Display(Order = 6)]
+        public string DescricaoLonga { get; set; }
+
+
         public virtual List<Image> ImageList { get; set; }
     }
 }

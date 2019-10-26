@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataProj.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Nancy.Json;
 using Newtonsoft.Json;
@@ -33,6 +34,16 @@ namespace ScallopShellProject.Controllers
 
 
             string wp = "Jogos2009";
+
+
+
+            wp = HttpContext.Session.GetString("Test");
+
+
+            Response.Cookies.Append("Cart", "TATA");
+
+
+
 
             if (wp != pw)
             {
@@ -88,6 +99,12 @@ namespace ScallopShellProject.Controllers
                 }
 
                 if (zinga.Article.Descricao == "")
+                {
+                    throw new Exception("Nao ser vazia a descricao");
+                }
+
+
+                if (zinga.Article.DescricaoLonga == "")
                 {
                     throw new Exception("Nao ser vazia a descricao");
                 }
