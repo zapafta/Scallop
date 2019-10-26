@@ -26,11 +26,6 @@ namespace ScallopShellProject.Controllers
         public IActionResult Index()
         {
 
-
-       
-
-
-      
         ShopViewModel sh = new ShopViewModel();
 
             sh.ListAllCategories = _categoryRepository.GetCategories();
@@ -49,5 +44,32 @@ namespace ScallopShellProject.Controllers
 
             return View(sh);
         }
+
+        public IActionResult LoadArticleByCategorie(string IdCategory)
+
+                                 
+        {
+            ShopViewModel sh = new ShopViewModel();
+
+            sh.ListAllCategories = _categoryRepository.GetCategories();
+
+            List<Guid> GuidsCategories = new List<Guid>();
+
+            foreach (var item in sh.ListAllCategories)
+            {
+                GuidsCategories.Add(item.Id);
+            }
+
+
+
+
+            sh.ListArticlesByCategories = _articleRepository.GertArticleByCategory(Guid.Parse(IdCategory));
+
+            return PartialView("_Products",sh);
+
+        }
+
+
+
     }
 }

@@ -47,8 +47,16 @@ namespace DataProj.Models
         }
 
 
+        public List<Article> GertArticleByCategory(Guid ListFilterd)
+        {
+            List<Article> l = context.Article.Include(t => t.ImageList).Where(t => t.IdCategory == ListFilterd).ToList();
+            
+            return l;
+        }
 
-             public void SaveArticle(Article article, List<Image> images)
+
+
+        public void SaveArticle(Article article, List<Image> images)
         {
 
 
