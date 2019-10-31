@@ -112,7 +112,7 @@
                     <!-- Add to Cart Form -->
                     <form class="cart clearfix" method="post">
                  
-                            <button type="submit" name="addtocart" value="5" class="btn amado-btn">Add to cart</button>
+                            <button type="submit" name="addtocart" onclick="Addcart('@Model.article.Id')" value="5" class="btn amado-btn">Add to cart</button>
                         </form>
 
                 </div>
@@ -122,24 +122,60 @@
 </div>
 <script>
 
-    //$(document).ready(function () {
+    $(document).ready(function () {
 
-    //    $(".carousel-item").find("[href]").each(function () {
-    //    //    if (this.href.split("?")[0] == window.location.href.split("?")[0]) {
-    //    //        $(this).addClass("active");
-    //    //    }
-    //    //});
-
-
-
-    //    //$("#ati").find("[href]").each(function () {
-    //    //    if (this.href.split("?")[0] == window.location.href.split("?")[0]) {
-    //    //        $(this).addClass("active");
-    //    //    }
-    //    //});
+        $(".carousel-item").find("[href]").each(function () {
+            if (this.href.split("?")[0] == window.location.href.split("?")[0]) {
+                $(this).addClass("active");
+            }
+        });
 
 
-    //})
+
+        $("#ati").find("[href]").each(function () {
+            if (this.href.split("?")[0] == window.location.href.split("?")[0]) {
+                $(this).addClass("active");
+            }
+        });
+
+
+    })
+
+
+    function Addcart(idArtigo) {
+
+           $.ajax({
+            type: 'POST',
+            url: '/Product/addCart',
+            data: {
+                'article': idArtigo
+            },
+            success: function (dados) {
+                
+
+                if (dados == "1") {
+                    $("#sucesso").text('Criado com Sucesso');
+                } else {
+                    $("#error").text(dados);
+                }
+
+            },
+            error: function (dados) {
+                debugger
+
+
+                if (dados == "1") {
+                    $("#sucesso").text('Criado com Sucesso');
+                } else {
+                    $("#error").text(dados);
+                }
+            }
+
+        });
+    }
+
+
+    
 
 
 </script>

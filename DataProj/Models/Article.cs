@@ -42,6 +42,9 @@ namespace DataProj.Models
         [Display(Order = 6)]
         public string DescricaoLonga { get; set; }
 
+        [Display(Order = 7)]
+        public int Ordenacao { get; set; }
+
 
         public virtual List<Image> ImageList { get; set; }
     }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ScallopShellProject.Models
 {
-    public class IndexViewModel : MotherViewModel
+    public class MotherViewModel
     {
 
-        public List<Article> Articles { get; set; }
+        public Cart Cart { get; set; }
 
-        public Article article { get; set; }
+
     }
 }

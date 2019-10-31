@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ScallopShellProject.Models
 {
-    public class ShopViewModel
+    public class ShopViewModel : MotherViewModel
     {
 
 

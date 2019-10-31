@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DataProj.Models;
 using Microsoft.AspNetCore.Mvc;
 using ScallopShellProject.Models;
+using ScallopShellProject.SessionModel;
 
 namespace ScallopShellProject.Controllers
 {
@@ -35,11 +36,62 @@ namespace ScallopShellProject.Controllers
             view.article = _articleRepository.GetArticleById(Guid.Parse(name));
 
 
+            var Cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+
+            if (Cart == null)
+            {
+                Cart cartIni = new Cart();
+
+                cartIni.ArticleList = cartIni.ArticleList = new List<Article>();
+                HttpContext.Session.SetObjectAsJson("Cart", cartIni);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cartIni);
+
+
+            }
+
+            Cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+
+            view.Cart = Cart;
+
+
 
 
 
 
             return View(view);
+        }
+
+
+        public string addCart(string article)
+
+        {
+
+            Guid guid = Guid.Parse(article);
+
+
+
+            Article art = _articleRepository.GetArticleById(guid);
+
+            var Cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+
+            if (Cart == null)
+            {
+                Cart cartIni = new Cart();
+
+                cartIni.ArticleList = _articleRepository.GertArticleByCategory(Guid.Parse("3c8d1d1c-e759-11e9-91be-d8cb8a97b101"));
+          
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cartIni);
+
+
+            }
+            else
+            {
+                Cart.ArticleList.Add(art);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart);
+            }
+
+
+            return "";
         }
     }
 }

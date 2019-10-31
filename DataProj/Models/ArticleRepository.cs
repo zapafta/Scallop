@@ -19,10 +19,10 @@ namespace DataProj.Models
         {
 
             List<Article> l = context.Article.Include(t => t.ImageList).ToList();
-            
 
 
-            return l;
+
+            return l.OrderBy(t => t.Ordenacao).ToList();
         }
 
 
@@ -43,15 +43,15 @@ namespace DataProj.Models
         public List<Article> GetArticlesByCategories(List<Guid> ListFilterd)
         {
             List<Article> l = context.Article.Include(t=> t.ImageList).Where(t => ListFilterd.Contains(t.IdCategory)).ToList();
-            return l;
+           return l.OrderBy(t => t.Ordenacao).ToList();
         }
 
 
         public List<Article> GertArticleByCategory(Guid ListFilterd)
         {
             List<Article> l = context.Article.Include(t => t.ImageList).Where(t => t.IdCategory == ListFilterd).ToList();
-            
-            return l;
+
+            return l.OrderBy(t => t.Ordenacao).ToList();
         }
 
 

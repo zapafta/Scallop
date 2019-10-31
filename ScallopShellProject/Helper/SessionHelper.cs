@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ScallopShellProject.SessionModel
 {
-    public static class SessionExtensions
+    public static class SessionHelper
     {
         public static void SetObjectAsJson(this ISession session, string key, object value)
         {

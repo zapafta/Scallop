@@ -38,13 +38,23 @@ namespace ScallopShellProject.Controllers
 
 
 
-            string ola = "TAST";
-            // AQUI JA TEMOS CART NA SESSAO :)
+
+            var Cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+
+            if (Cart==null)
+            {
+                Cart cartIni = new Cart();
+
+                cartIni.ArticleList = new List<Article>();
+                HttpContext.Session.SetObjectAsJson("Cart", cartIni);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cartIni);
 
 
-            HttpContext.Session.SetObjectAsJson("Cart", index.Articles);
+            }
 
-            var employeeDetails = HttpContext.Session.GetObjectFromJson<List<Article>>("Cart");
+            Cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+
+            index.Cart = Cart;
 
 
             return View(index);

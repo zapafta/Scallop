@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ScallopShellProject.Models
 {
-    public class ZingarelhoViewModel
+    public class ZingarelhoViewModel : MotherViewModel
     {
 
         public List<Category> ListAllCategories { get; set; }
