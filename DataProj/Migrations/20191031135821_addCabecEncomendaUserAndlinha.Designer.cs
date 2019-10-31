@@ -3,14 +3,16 @@ using System;
 using DataProj;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataProj.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191031135821_addCabecEncomendaUserAndlinha")]
+    partial class addCabecEncomendaUserAndlinha
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,8 +72,6 @@ namespace DataProj.Migrations
                     b.Property<string>("Descricao")
                         .IsRequired();
 
-                    b.Property<Guid>("IdUserSite");
-
                     b.Property<string>("Localidade")
                         .IsRequired();
 
@@ -81,8 +81,6 @@ namespace DataProj.Migrations
                     b.Property<bool>("Payment");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdUserSite");
 
                     b.ToTable("EncomendaCabec");
                 });
@@ -98,6 +96,8 @@ namespace DataProj.Migrations
 
                     b.Property<Guid>("IdEncomendaCabec");
 
+                    b.Property<Guid>("IdUserSite");
+
                     b.Property<bool>("IsPayment");
 
                     b.Property<double>("PrecoUnit");
@@ -110,6 +110,8 @@ namespace DataProj.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdEncomendaCabec");
+
+                    b.HasIndex("IdUserSite");
 
                     b.ToTable("EncomendaLinha");
                 });
@@ -152,19 +154,16 @@ namespace DataProj.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DataProj.Models.EncomendaCabec", b =>
-                {
-                    b.HasOne("DataProj.Models.UserSite", "UserSite")
-                        .WithMany()
-                        .HasForeignKey("IdUserSite")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("DataProj.Models.EncomendaLinha", b =>
                 {
                     b.HasOne("DataProj.Models.EncomendaCabec", "EncomendaCabec")
                         .WithMany()
                         .HasForeignKey("IdEncomendaCabec")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DataProj.Models.UserSite", "UserSite")
+                        .WithMany()
+                        .HasForeignKey("IdUserSite")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

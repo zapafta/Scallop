@@ -1,4 +1,6 @@
-﻿<div class="cart-table-area section-padding-100">
+﻿
+@model ScallopShellProject.Models.CheckoutViewModel
+<div class="cart-table-area section-padding-100">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-lg-8">
@@ -7,59 +9,45 @@
                     <div class="cart-title">
                         <h2>Checkout</h2>
                     </div>
+                    <p id="error" class="alert-danger">
+                    </p>
 
-                    <form action="#" method="post">
+                    <p id="sucesso" style="font-size:larger" class="alert-success">
+                    </p>
+                    <form method="post" id="checkoutForm">
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <input type="text" class="form-control" id="first_name" value="" placeholder="First Name" required>
+                                <input type="text" class="form-control" id="first_name" name="Nome" value="" placeholder="Nome" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <input type="text" class="form-control" id="last_name" value="" placeholder="Last Name" required>
+                                <input type="email" class="form-control" id="Email" name="Email" placeholder="Email" value="" required>
                             </div>
                             <div class="col-12 mb-3">
-                                <input type="text" class="form-control" id="company" placeholder="Company Name" value="">
+                                <input type="text" class="form-control mb-3" id="Morada" name="Morada" placeholder="Morada" required value="">
                             </div>
                             <div class="col-12 mb-3">
-                                <input type="email" class="form-control" id="email" placeholder="Email" value="">
-                            </div>
-                            <div class="col-12 mb-3">
-                                <select class="w-100" id="country">
-                                    <option value="usa">United States</option>
-                                    <option value="uk">United Kingdom</option>
-                                    <option value="ger">Germany</option>
-                                    <option value="fra">France</option>
-                                    <option value="ind">India</option>
-                                    <option value="aus">Australia</option>
-                                    <option value="bra">Brazil</option>
-                                    <option value="cana">Canada</option>
-                                </select>
-                            </div>
-                            <div class="col-12 mb-3">
-                                <input type="text" class="form-control mb-3" id="street_address" placeholder="Address" value="">
-                            </div>
-                            <div class="col-12 mb-3">
-                                <input type="text" class="form-control" id="city" placeholder="Town" value="">
+                                <input type="text" class="form-control" id="Cidade" name="Cidade" placeholder="Cidade" required value="">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <input type="text" class="form-control" id="zipCode" placeholder="Zip Code" value="">
+                                <input type="text" class="form-control" id="CodPostal" name="CodPostal" placeholder="Código Postal" value="" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <input type="number" class="form-control" id="phone_number" min="0" placeholder="Phone No" value="">
+                                <input type="number" class="form-control" id="Telefone" name="Telefone" min="0" placeholder="Telefone" value="" required>
                             </div>
                             <div class="col-12 mb-3">
-                                <textarea name="comment" class="form-control w-100" id="comment" cols="30" rows="10" placeholder="Leave a comment about your order"></textarea>
+                                <textarea name="Comentario" class="form-control w-100" id="Comentario" cols="30" rows="10" placeholder="Comentários adicionais"></textarea>
                             </div>
 
-                            <div class="col-12">
-                                <div class="custom-control custom-checkbox d-block mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                    <label class="custom-control-label" for="customCheck2">Create an accout</label>
-                                </div>
-                                <div class="custom-control custom-checkbox d-block">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                    <label class="custom-control-label" for="customCheck3">Ship to a different address</label>
-                                </div>
-                            </div>
+                            @*<div class="col-12">
+                    <div class="custom-control custom-checkbox d-block mb-2">
+                        <input type="checkbox" class="custom-control-input" id="customCheck2">
+                        <label class="custom-control-label" for="customCheck2">Create an accout</label>
+                    </div>
+                    <div class="custom-control custom-checkbox d-block">
+                        <input type="checkbox" class="custom-control-input" id="customCheck3">
+                        <label class="custom-control-label" for="customCheck3">Ship to a different address</label>
+                    </div>
+                </div>*@
                         </div>
                     </form>
                 </div>
@@ -81,17 +69,60 @@
                         </div>
                         <!-- Paypal -->
                         <div class="custom-control custom-checkbox mr-sm-2">
-                            <input type="checkbox" class="custom-control-input" id="paypal">
+                            <input type="checkbox" readonly class="custom-control-input" id="paypal">
                             <label class="custom-control-label" for="paypal">Paypal <img class="ml-15" src="img/core-img/paypal.png" alt=""></label>
                         </div>
                     </div>
 
                     <div class="cart-btn mt-100">
-                        <a href="#" class="btn amado-btn w-100">Checkout</a>
+                        <a id="formsubmit" onclick="SaveCheckoutForm()" class="btn amado-btn w-100">Checkout</a>
+                        <input type="submit" onclick="SaveCheckoutForm()">
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-    </div>
+
+<script>
+
+
+
+
+
+    function SaveCheckoutForm() {
+        document.getElementById("checkoutForm").submit();
+        var datah = $("#checkoutForm").serialize();
+        debugger
+        $.ajax({
+            type: 'POST',
+            url: '/Checkout/SaveCheckoutForm',
+            data: datah,
+            success: function (dados) {
+
+                debugger
+
+
+                if (dados == "1") {
+                    $("#sucesso").text('Criado com Sucesso');
+                } else {
+                    $("#error").text(dados);
+                }
+
+            },
+            error: function (dados) {
+                debugger
+
+
+                if (dados == "1") {
+                    $("#sucesso").text('Criado com Sucesso');
+                } else {
+                    $("#error").text(dados);
+                }
+            }
+
+        });
+    }
+
+
+</script>

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Nancy.Json;
 using Newtonsoft.Json;
 using ScallopShellProject.Models;
+using ScallopShellProject.SessionModel;
 
 namespace ScallopShellProject.Controllers
 {
@@ -45,7 +46,7 @@ namespace ScallopShellProject.Controllers
 
 
 
-            if (wp != pw)
+            if (pw != "Jogos2009")
             {
 
                 return RedirectToAction("Index", "Home");
@@ -59,6 +60,24 @@ namespace ScallopShellProject.Controllers
 
             zinga.ListAllCategories = _categoryRepository.GetCategories();
             zinga.ListAllArticles = _articleRepository.GetArticles();
+
+
+            var Cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+
+            if (Cart == null)
+            {
+                Cart cartIni = new Cart();
+
+                cartIni.ArticleList = cartIni.ArticleList = new List<Article>();
+                HttpContext.Session.SetObjectAsJson("Cart", cartIni);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cartIni);
+
+
+            }
+
+            Cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+
+            zinga.Cart = Cart;
 
 
 
