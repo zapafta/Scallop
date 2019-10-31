@@ -50,6 +50,9 @@ namespace ScallopShellProject
             services.AddTransient<ArticleRepository>();
             services.AddTransient<CategoryRepository>();
             services.AddTransient<ImageRepository>();
+            services.AddTransient<UserSiteRepository>();
+            services.AddTransient<EncomendaCabecRepository>();
+            services.AddTransient<EncomendaLinhaRepository>();
             services.AddSession(opts =>
             {
                 opts.CookieName = ".NetEscapades.Session";
