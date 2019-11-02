@@ -1,5 +1,6 @@
 ﻿
 @model ScallopShellProject.Models.CheckoutViewModel
+
 <div class="cart-table-area section-padding-100">
     <div class="container-fluid">
         <div class="row">
@@ -14,7 +15,7 @@
 
                     <p id="sucesso" style="font-size:larger" class="alert-success">
                     </p>
-                    <form method="post" id="checkoutForm">
+                    <form method="post" id="checkoutForm" action="/Checkout/SaveCheckoutForm">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <input type="text" class="form-control" id="first_name" name="Nome" value="" placeholder="Nome" required>
@@ -38,16 +39,35 @@
                                 <textarea name="Comentario" class="form-control w-100" id="Comentario" cols="30" rows="10" placeholder="Comentários adicionais"></textarea>
                             </div>
 
+                            <input type="hidden" name="yourmodelprefix.PlanID" />
+                            <input type="hidden" name="yourmodelprefix.CurrentPlan" />
+                            <input type="checkbox" name="yourmodelprefix.ShouldCompare" />
+
+
+
+
+                            @{Model.ListArticles = Model.Cart.ArticleList; }
+                            
+
+                            <select name="ListIdArticle" id="ListIdArticle" multiple style="display:none">
+                                @foreach (var item in Model.ListArticles)
+                                {
+                                    <option selected value="@item.Id">@item.Id</option>
+                                }
+                            </select>
+
+                            <input id="titi" type="submit" style="display:none">
+
                             @*<div class="col-12">
-                    <div class="custom-control custom-checkbox d-block mb-2">
-                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                        <label class="custom-control-label" for="customCheck2">Create an accout</label>
-                    </div>
-                    <div class="custom-control custom-checkbox d-block">
-                        <input type="checkbox" class="custom-control-input" id="customCheck3">
-                        <label class="custom-control-label" for="customCheck3">Ship to a different address</label>
-                    </div>
-                </div>*@
+            <div class="custom-control custom-checkbox d-block mb-2">
+                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                <label class="custom-control-label" for="customCheck2">Create an accout</label>
+            </div>
+            <div class="custom-control custom-checkbox d-block">
+                <input type="checkbox" class="custom-control-input" id="customCheck3">
+                <label class="custom-control-label" for="customCheck3">Ship to a different address</label>
+            </div>
+        </div>*@
                         </div>
                     </form>
                 </div>
@@ -56,33 +76,78 @@
                 <div class="cart-summary">
                     <h5>Cart Total</h5>
                     <ul class="summary-table">
-                        <li><span>subtotal:</span> <span>$140.00</span></li>
+                        <li><span>subtotal:</span> <span>@Model.Cart.ArticleList.Sum(item => item.PrecoUnit).ToString("0.00") €</span></li>
                         <li><span>delivery:</span> <span>Free</span></li>
-                        <li><span>total:</span> <span>$140.00</span></li>
+                        <li><span>total:</span> <span>@Model.Cart.ArticleList.Sum(item => item.PrecoUnit).ToString("0.00") €</span></li>
                     </ul>
 
-                    <div class="payment-method">
-                        <!-- Cash on delivery -->
-                        <div class="custom-control custom-checkbox mr-sm-2">
-                            <input type="checkbox" class="custom-control-input" id="cod" checked>
-                            <label class="custom-control-label" for="cod">Cash on Delivery</label>
-                        </div>
-                        <!-- Paypal -->
-                        <div class="custom-control custom-checkbox mr-sm-2">
-                            <input type="checkbox" readonly class="custom-control-input" id="paypal">
-                            <label class="custom-control-label" for="paypal">Paypal <img class="ml-15" src="img/core-img/paypal.png" alt=""></label>
-                        </div>
-                    </div>
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            @foreach (var item in Model.Cart.ArticleList)
+                            {
 
-                    <div class="cart-btn mt-100">
-                        <a id="formsubmit" onclick="SaveCheckoutForm()" class="btn amado-btn w-100">Checkout</a>
-                        <input type="submit" onclick="SaveCheckoutForm()">
+                                var base64 = Convert.ToBase64String(item.ImageList[0].ImageByte);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                <tr>
+                                    <td class="cart_product_img">
+                                        <a href="#"><img src="@imgSrc" alt="Product"></a>
+                                    </td>
+                                    <td class="cart_product_desc">
+                                        <h5>@item.Descricao</h5>
+                                    </td>
+                                    <td class="price">
+                                        <span>@(item.PrecoUnit.ToString("0.00")) €</span>
+                                    </td>
+                                    <td class="qty">
+                                        <div class="qty-btn d-flex">
+                                            <p>Qty</p>
+                                            <div class="quantity">
+                                                <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                                <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1">
+                                                <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="payment-method">
+                    <!-- Cash on delivery -->
+                    <div class="custom-control custom-checkbox mr-sm-2">
+                        <input type="checkbox" class="custom-control-input" id="cod" checked>
+                        <label class="custom-control-label" for="cod">Cash on Delivery</label>
                     </div>
+                    <!-- Paypal -->
+                    <div class="custom-control custom-checkbox mr-sm-2">
+                        <input type="checkbox" readonly class="custom-control-input" id="paypal">
+                        <label class="custom-control-label" for="paypal">Paypal <img class="ml-15" src="img/core-img/paypal.png" alt=""></label>
+                    </div>
+                </div>
+
+                <div class="cart-btn mt-100">
+
+                    <a href="#" onclick="SaveCheckoutForm()" class="btn amado-btn w-100">Checkout</a>
+
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <script>
 
@@ -91,37 +156,40 @@
 
 
     function SaveCheckoutForm() {
-        document.getElementById("checkoutForm").submit();
-        var datah = $("#checkoutForm").serialize();
-        debugger
-        $.ajax({
-            type: 'POST',
-            url: '/Checkout/SaveCheckoutForm',
-            data: datah,
-            success: function (dados) {
 
-                debugger
+        document.getElementById("titi").click();
 
+        //document.getElementById("checkoutForm").submit();
+        //var datah = $("#checkoutForm").serialize();
+        //debugger
+        //$.ajax({
+        //    type: 'POST',
+        //    url: '/Checkout/SaveCheckoutForm',
+        //    data: datah,
+        //    success: function (dados) {
 
-                if (dados == "1") {
-                    $("#sucesso").text('Criado com Sucesso');
-                } else {
-                    $("#error").text(dados);
-                }
-
-            },
-            error: function (dados) {
-                debugger
+        //        debugger
 
 
-                if (dados == "1") {
-                    $("#sucesso").text('Criado com Sucesso');
-                } else {
-                    $("#error").text(dados);
-                }
-            }
+        //        if (dados == "1") {
+        //            $("#sucesso").text('Criado com Sucesso');
+        //        } else {
+        //            $("#error").text(dados);
+        //        }
 
-        });
+        //    },
+        //    error: function (dados) {
+        //        debugger
+
+
+        //        if (dados == "1") {
+        //            $("#sucesso").text('Criado com Sucesso');
+        //        } else {
+        //            $("#error").text(dados);
+        //        }
+        //    }
+
+        //});
     }
 
 

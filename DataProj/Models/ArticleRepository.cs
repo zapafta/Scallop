@@ -47,6 +47,13 @@ namespace DataProj.Models
         }
 
 
+        public List<Article> GetArticlesByListId(List<Guid> ListArticleGuid)
+        {
+            List<Article> l = context.Article.Include(t => t.ImageList).Where(t => ListArticleGuid.Contains(t.Id)).ToList();
+            return l.OrderBy(t => t.Ordenacao).ToList();
+        }
+
+
         public List<Article> GertArticleByCategory(Guid ListFilterd)
         {
             List<Article> l = context.Article.Include(t => t.ImageList).Where(t => t.IdCategory == ListFilterd).ToList();

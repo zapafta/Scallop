@@ -1,6 +1,7 @@
 ﻿using DataProj.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 
 namespace DataProj
 {
@@ -29,6 +30,17 @@ namespace DataProj
 
         {
 
+
+            var cascadeFKs = modelBuilder.Model.GetEntityTypes()
+.SelectMany(t => t.GetForeignKeys())
+.Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+
+            foreach (var fk in cascadeFKs)
+                fk.DeleteBehavior = DeleteBehavior.Restrict;
+
+
+
+         
 
             base.OnModelCreating(modelBuilder);
         }

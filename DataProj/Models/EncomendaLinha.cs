@@ -27,7 +27,7 @@ namespace DataProj.Models
 
         [Display(Order = 3)]
         [Required(ErrorMessage = "PrecoUnit is required")]
-        public double PrecoUnit { get; set; }
+        public decimal PrecoUnit { get; set; }
 
         [Display(Order = 4)]
         [Required(ErrorMessage = "Qty is required")]
@@ -46,6 +46,10 @@ namespace DataProj.Models
         [Required(ErrorMessage = "DateModification is required")]
         public string UserCreation { get; set; }
 
+        [Display(Order = 8)]
+        [ForeignKey("Article")]
+        public Guid ArticleID { get; set; }
+        public Article Article { get; set; }
 
 
 

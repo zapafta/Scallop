@@ -12,7 +12,6 @@ namespace DataProj.Models
 
         [Key]
         [Display(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required(ErrorMessage = "Id is required")]
         public Guid Id { get; set; }
 
@@ -40,11 +39,15 @@ namespace DataProj.Models
 
 
 
-
         [Display(Order = 8)]
         [ForeignKey("UserSite")]
         public Guid IdUserSite { get; set; }
         public UserSite UserSite { get; set; }
+
+
+        [Display(Order = 9)]
+        public string NomeUtilizador { get; set; }
+
 
 
     }

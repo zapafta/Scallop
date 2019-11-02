@@ -50,6 +50,8 @@ namespace DataProj.Models
                 encomendaLinhaNew.Qty = encomendaLinha.Qty;
                 encomendaLinhaNew.UserCreation = "";
                 encomendaLinhaNew.DateCreation = DateTime.Now;
+                encomendaLinhaNew.ArticleID = encomendaLinha.ArticleID;
+                encomendaLinhaNew.Article = encomendaLinha.Article;
                 context.Entry(encomendaLinhaNew).State = EntityState.Added;
                 context.SaveChanges();
             }

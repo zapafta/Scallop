@@ -3,14 +3,16 @@ using System;
 using DataProj;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataProj.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191102131404_fixArticle")]
+    partial class fixArticle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,8 +80,6 @@ namespace DataProj.Migrations
                     b.Property<string>("Morada")
                         .IsRequired();
 
-                    b.Property<string>("NomeUtilizador");
-
                     b.Property<bool>("Payment");
 
                     b.HasKey("Id");
@@ -94,11 +94,11 @@ namespace DataProj.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("ArticleID");
-
                     b.Property<DateTime>("DateCreation");
 
                     b.Property<DateTime>("DateModification");
+
+                    b.Property<Guid>("IdArticle");
 
                     b.Property<Guid>("IdEncomendaCabec");
 
@@ -113,7 +113,7 @@ namespace DataProj.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArticleID");
+                    b.HasIndex("IdArticle");
 
                     b.HasIndex("IdEncomendaCabec");
 
@@ -155,7 +155,7 @@ namespace DataProj.Migrations
                     b.HasOne("DataProj.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("IdCategory")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DataProj.Models.EncomendaCabec", b =>
@@ -163,20 +163,20 @@ namespace DataProj.Migrations
                     b.HasOne("DataProj.Models.UserSite", "UserSite")
                         .WithMany()
                         .HasForeignKey("IdUserSite")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DataProj.Models.EncomendaLinha", b =>
                 {
                     b.HasOne("DataProj.Models.Article", "Article")
                         .WithMany()
-                        .HasForeignKey("ArticleID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("IdArticle")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DataProj.Models.EncomendaCabec", "EncomendaCabec")
                         .WithMany()
                         .HasForeignKey("IdEncomendaCabec")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DataProj.Models.Image", b =>

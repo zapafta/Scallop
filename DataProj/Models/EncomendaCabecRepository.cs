@@ -44,13 +44,14 @@ namespace DataProj.Models
             {
                 //Vamos gravar
                 EncomendaCabec encomendaCabecNew = new EncomendaCabec();
-                encomendaCabecNew.Id = Guid.NewGuid();
+                encomendaCabecNew.Id = encomendaCabec.Id;
                 encomendaCabecNew.CodPostal = encomendaCabec.CodPostal;
                 encomendaCabecNew.Descricao = encomendaCabec.Descricao;
                 encomendaCabecNew.IdUserSite = encomendaCabec.IdUserSite;
                 encomendaCabecNew.Localidade = encomendaCabec.Localidade;
                 encomendaCabecNew.Morada = encomendaCabec.Morada;
                 encomendaCabecNew.Payment = encomendaCabec.Payment;
+                encomendaCabecNew.NomeUtilizador = encomendaCabec.NomeUtilizador;
                 context.Entry(encomendaCabecNew).State = EntityState.Added;
                 context.SaveChanges();
             }
@@ -62,6 +63,7 @@ namespace DataProj.Models
                 encomendaLinhaVerify.Localidade = encomendaCabec.Localidade;
                 encomendaLinhaVerify.Morada = encomendaCabec.Morada;
                 encomendaLinhaVerify.Payment = encomendaCabec.Payment;
+                encomendaLinhaVerify.NomeUtilizador = encomendaCabec.NomeUtilizador;
                 context.Entry(encomendaLinhaVerify).State = EntityState.Modified;
                 context.SaveChanges();
 

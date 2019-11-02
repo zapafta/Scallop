@@ -3,14 +3,16 @@ using System;
 using DataProj;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataProj.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191102131734_fixArticleDisable")]
+    partial class fixArticleDisable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,8 +80,6 @@ namespace DataProj.Migrations
                     b.Property<string>("Morada")
                         .IsRequired();
 
-                    b.Property<string>("NomeUtilizador");
-
                     b.Property<bool>("Payment");
 
                     b.HasKey("Id");
@@ -93,8 +93,6 @@ namespace DataProj.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("ArticleID");
 
                     b.Property<DateTime>("DateCreation");
 
@@ -112,8 +110,6 @@ namespace DataProj.Migrations
                         .IsRequired();
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ArticleID");
 
                     b.HasIndex("IdEncomendaCabec");
 
@@ -168,11 +164,6 @@ namespace DataProj.Migrations
 
             modelBuilder.Entity("DataProj.Models.EncomendaLinha", b =>
                 {
-                    b.HasOne("DataProj.Models.Article", "Article")
-                        .WithMany()
-                        .HasForeignKey("ArticleID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("DataProj.Models.EncomendaCabec", "EncomendaCabec")
                         .WithMany()
                         .HasForeignKey("IdEncomendaCabec")

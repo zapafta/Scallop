@@ -27,5 +27,7 @@ namespace ScallopShellProject.Models
 
         public List<Article> ListArticles { get; set; }
 
+        public List<Guid> ListIdArticle { get; set; }
+
     }
 }

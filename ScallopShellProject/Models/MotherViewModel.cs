@@ -11,6 +11,6 @@ namespace ScallopShellProject.Models
 
         public Cart Cart { get; set; }
 
-
+        public string Error { get; set; }
     }
 }
